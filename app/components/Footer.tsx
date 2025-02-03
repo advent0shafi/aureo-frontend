@@ -16,7 +16,6 @@ import {
 export default function Footer() {
   const { t, i18n } = useTranslation();
 
-
   const changeLanguage = () => {
     i18n.changeLanguage(i18n.language === "en" ? "ar" : "en");
   };
@@ -28,9 +27,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Company Info */}
           <div>
-          <Link href="/" className="flex-shrink-0 flex items-center">
-            <Image src="/logo_001.png" width={50} alt="logo" height={50} className="object-contain" />
-          </Link>
+            <Link href="/" className="flex-shrink-0 flex items-center">
+              <Image
+                src="/logo_001.png"
+                width={50}
+                alt="logo"
+                height={50}
+                className="object-contain"
+              />
+            </Link>
             <p className="text-gray-400 mb-6">{t("companyDescription")}</p>
             <div className="flex space-x-4">
               <a
@@ -222,28 +227,68 @@ export default function Footer() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <Image
-                src="https://placehold.co/40x25/FEF3C7/92400E?text=Visa"
-                alt="Visa"
-                width={24}
-                height={24}
+              {/* Visa SVG */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 40 25"
                 className="h-6"
-              />
-              <Image
-                src="https://placehold.co/40x25/FEF3C7/92400E?text=Visa"
-                alt="Mastercard"
-                width={24}
-                height={24}
-                className="h-6"
-              />
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="40" height="25" fill="#FEF3C7" />
+                <text
+                  x="20"
+                  y="16"
+                  textAnchor="middle"
+                  fill="#92400E"
+                  fontSize="8"
+                  fontFamily="Arial, sans-serif"
+                >
+                  Visa
+                </text>
+              </svg>
 
-              <Image
-                src="https://placehold.co/40x25/FEF3C7/92400E?text=Visa"
-                alt="American Express"
-                width={24}
-                height={24}
+              {/* Mastercard SVG */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 40 25"
                 className="h-6"
-              />
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="40" height="25" fill="#FEF3C7" />
+                <text
+                  x="20"
+                  y="16"
+                  textAnchor="middle"
+                  fill="#92400E"
+                  fontSize="8"
+                  fontFamily="Arial, sans-serif"
+                >
+                  Mastercard
+                </text>
+              </svg>
+
+              {/* American Express SVG */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 40 25"
+                className="h-6"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="40" height="25" fill="#FEF3C7" />
+                <text
+                  x="20"
+                  y="16"
+                  textAnchor="middle"
+                  fill="#92400E"
+                  fontSize="8"
+                  fontFamily="Arial, sans-serif"
+                >
+                  AmEx
+                </text>
+              </svg>
             </div>
           </div>
         </div>
