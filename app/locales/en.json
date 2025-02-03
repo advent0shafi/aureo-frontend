@@ -1,0 +1,58 @@
+{
+    "header": {
+      "title": "E-Commerce Store",
+      "cart": "Cart",
+      "wishlist": "Wishlist",
+      "profile": "Profile"
+    },
+    "home": {
+      "welcome": "Welcome to our E-Commerce Store",
+      "viewAll": "View all"
+    },
+    "product": {
+      "addToCart": "Add to Cart",
+      "addToWishlist": "Add to Wishlist",
+      "removeFromWishlist": "Remove from Wishlist"
+    },
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is empty.",
+      "total": "Total",
+      "checkout": "Proceed to Checkout",
+      "clear": "Clear Cart"
+    },
+    "wishlist": {
+      "title": "Your Wishlist",
+      "empty": "Your wishlist is empty."
+    },
+    "checkout": {
+      "title": "Checkout",
+      "address": "Shipping Address",
+      "paymentMethod": "Payment Method",
+      "orderSummary": "Order Summary",
+      "placeOrder": "Place Order"
+    },
+    "confirmation": {
+      "title": "Order Confirmation",
+      "thankYou": "Thank you for your order!",
+      "emailConfirmation": "You will receive an email confirmation shortly."
+    },
+    "profile": {
+      "title": "Your Profile",
+      "username": "Username",
+      "email": "Email",
+      "updateAddress": "Update Address",
+      "logout": "Logout"
+    },
+    "auth": {
+      "login": "Login",
+      "register": "Register",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "noAccount": "Don't have an account?",
+      "haveAccount": "Already have an account?"
+    }
+  }
+  
+  
