@@ -6,7 +6,7 @@ import Link from "next/link";
 
 
 interface ProductCardProps {
-  product: ProductAPI;
+  product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {

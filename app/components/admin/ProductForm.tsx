@@ -3,6 +3,7 @@
 import { useState, useEffect, type ChangeEvent, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Category {
   id: number
@@ -128,7 +129,7 @@ export default function EnhancedProductForm({ product = null }: ProductFormProps
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/product/api/categories/")
+        const res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/`)
         const data = await res.json()
         setCategories(data.results || data)
       } catch (error) {
@@ -168,7 +169,8 @@ export default function EnhancedProductForm({ product = null }: ProductFormProps
   }, [product])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type, checked } = e.target
+    const { name, value, type } = e.target
+    const checked = (e.target as HTMLInputElement).checked
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -318,8 +320,8 @@ export default function EnhancedProductForm({ product = null }: ProductFormProps
 
     try {
       const url = product
-        ? `http://127.0.0.1:8000/product/api/products/${product.id}/`
-        : "http://127.0.0.1:8000/product/api/products/"
+        ? `${BACKEND_BASE_URL}/product/api/products/${product.id}/`
+        : `${BACKEND_BASE_URL}/product/api/products/`
       const method = product ? "PATCH" : "POST"
 
       const res = await fetch(url, { method, body: data })
@@ -340,7 +342,8 @@ export default function EnhancedProductForm({ product = null }: ProductFormProps
         })
         // Show success message or redirect
         alert("Product successfully saved!")
-        // router.push("/admin/products")
+
+        router.push("/admin/products")
       } else {
         const errorData = await res.json()
         console.error("Submission failed", errorData)

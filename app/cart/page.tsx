@@ -1,11 +1,12 @@
 "use client"
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import axios from "axios"
 import Image from "next/image"
 import toast, { Toaster } from "react-hot-toast"
 import { FaTrash, FaMinus, FaPlus, FaArrowLeft, FaCcVisa, FaCcMastercard, FaCcAmex } from "react-icons/fa"
 import Link from "next/link"
 import CartSkeleton from "@/app/components/skeletons/CartSkeleton"
+import BACKEND_BASE_URL from "../lib/Api"
 
 interface Product {
   id: number
@@ -33,7 +34,7 @@ interface Cart {
   total: number
 }
 
-const API_BASE_URL = "http://127.0.0.1:8000"
+const API_BASE_URL = BACKEND_BASE_URL
 
 export default function Carts() {
   const [cart, setCart] = useState<Cart | null>(null)
@@ -64,6 +65,12 @@ export default function Carts() {
     }
   }, [getOrCreateGuestId])
 
+  const fetchCartRef = useRef(fetchCart)
+
+  useEffect(() => {
+    fetchCartRef.current = fetchCart
+  }, [fetchCart])
+
   const updateCartItem = useCallback(
     async (itemId: number, action: "delete" | "update", newQuantity?: number) => {
       try {
@@ -72,6 +79,37 @@ export default function Carts() {
         const url = `${API_BASE_URL}/cart/carts/${itemId}/`
         const data = action === "update" ? { quantity: newQuantity } : undefined
 
+        // Optimistically update the UI
+        setCart((prevCart) => {
+          if (!prevCart) return null
+
+          if (action === "delete") {
+            const updatedItems = prevCart.items.filter((item) => item.id !== itemId)
+            const updatedSubtotal = updatedItems.reduce((sum, item) => sum + item.subtotal, 0)
+            return {
+              ...prevCart,
+              items: updatedItems,
+              subtotal: updatedSubtotal,
+              total: updatedSubtotal + prevCart.shipping_cost + prevCart.vat,
+            }
+          } else if (action === "update" && newQuantity !== undefined) {
+            const updatedItems = prevCart.items.map((item) =>
+              item.id === itemId
+                ? { ...item, quantity: newQuantity, subtotal: item.product.price * newQuantity }
+                : item,
+            )
+            const updatedSubtotal = updatedItems.reduce((sum, item) => sum + item.subtotal, 0)
+            return {
+              ...prevCart,
+              items: updatedItems,
+              subtotal: updatedSubtotal,
+              total: updatedSubtotal + prevCart.shipping_cost + prevCart.vat,
+            }
+          }
+          return prevCart
+        })
+
+        // Make the API call
         await axios({
           method,
           url,
@@ -80,13 +118,14 @@ export default function Carts() {
         })
 
         toast.success(action === "delete" ? "Item removed" : "Quantity updated")
-        fetchCart()
       } catch (error) {
         console.error(`Error ${action}ing item:`, error)
         toast.error(`Failed to ${action} item`)
+        // Revert the optimistic update on error
+        fetchCartRef.current()
       }
     },
-    [getOrCreateGuestId, fetchCart],
+    [getOrCreateGuestId],
   )
 
   useEffect(() => {

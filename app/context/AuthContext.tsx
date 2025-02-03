@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { createContext, useState, useContext, useEffect } from "react"
+import BACKEND_BASE_URL from "../lib/Api"
 
 interface User {
   id: number
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const accessToken = localStorage.getItem("access_token")
       if (accessToken) {
         try {
-          const userResponse = await fetch("http://127.0.0.1:8000/auth/user/", {
+          const userResponse = await fetch(`${BACKEND_BASE_URL}/auth/user/`, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
@@ -59,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [])
 
   const login = async (username: string, password: string) => {
-    const response = await fetch("http://127.0.0.1:8000/auth/login/", {
+    const response = await fetch(`${BACKEND_BASE_URL}/auth/login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -74,7 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.setItem("access_token", access)
     localStorage.setItem("refresh_token", refresh)
 
-    const userResponse = await fetch("http://127.0.0.1:8000/auth/user/", {
+    const userResponse = await fetch(`${BACKEND_BASE_URL}/auth/user/`, {
       headers: {
         Authorization: `Bearer ${access}`,
       },
@@ -100,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     password: string,
     confirmPassword: string
   ) => {
-    const response = await fetch("http://127.0.0.1:8000/auth/register/", {
+    const response = await fetch(`${BACKEND_BASE_URL}/auth/register/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

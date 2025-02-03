@@ -13,7 +13,7 @@ export default function ProductImages({
     <div className="space-y-4">
       <div className="aspect-square bg-amber-50 rounded-2xl overflow-hidden">
         <Image
-          src={ `http://127.0.0.1:8000/${selectedImage}`}
+          src={ `${selectedImage}`}
           alt={'images'}
           width={500}
           height={500}

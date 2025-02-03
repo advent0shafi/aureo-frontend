@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useTranslation } from "react-i18next"
 import NewArrivalsSkeleton from "./NewArrivalsSketeton"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Product {
   id: number
@@ -32,7 +33,7 @@ const NewArrivals: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:8000/product/api/products/")
+        const response = await fetch(`${BACKEND_BASE_URL}/product/api/products/`)
         const data: ApiResponse = await response.json()
         const lastFourProducts = data.results.slice(-4)
         setProducts(lastFourProducts)

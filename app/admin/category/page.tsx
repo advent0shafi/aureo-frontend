@@ -6,6 +6,7 @@ import { Trash2, Edit, Plus } from "lucide-react"
 import { CategoryTableSkeleton } from "@/app/components/admin/CategoryTableSkeleton"
 import AdminLayout from "@/app/components/admin/AdminLayout"
 import Image from "next/image"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Category {
   id: number
@@ -21,7 +22,7 @@ export default function CategoriesPage() {
   const fetchCategories = async () => {
     setIsLoading(true)
     try {
-      const res = await fetch("http://localhost:8000/product/api/categories/")
+      const res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/`)
       const data = await res.json()
       setCategories(data.results)
       console.log(data)
@@ -40,7 +41,7 @@ export default function CategoriesPage() {
     if (!id) return
     if (!confirm("Are you sure you want to delete this category?")) return
     try {
-      const res = await fetch(`http://localhost:8000/product/api/categories/${id}/`, {
+      const res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/${id}/`, {
         method: "DELETE",
       })
       if (res.ok) {

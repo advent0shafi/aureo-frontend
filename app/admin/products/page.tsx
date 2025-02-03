@@ -6,6 +6,7 @@ import { Trash2, Edit, Plus } from "lucide-react"
 import { ProductTableSkeleton } from "@/app/components/admin/ProductListSkeleton"
 import AdminLayout from "@/app/components/admin/AdminLayout"
 import Image from "next/image"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Product {
   id: number
@@ -23,7 +24,7 @@ export default function ProductsPage() {
   const fetchProducts = async () => {
     setIsLoading(true)
     try {
-      const res = await fetch("http://127.0.0.1:8000/product/api/products/")
+      const res = await fetch(`${BACKEND_BASE_URL}/product/api/products/`)
       const data = await res.json()
       setProducts(data.results || data)
     } catch (error) {
@@ -41,7 +42,7 @@ export default function ProductsPage() {
     if (!id) return
     if (!confirm("Are you sure you want to delete this product?")) return
     try {
-      const res = await fetch(`http://127.0.0.1:8000/product/api/products/${id}/`, {
+      const res = await fetch(`${BACKEND_BASE_URL}/product/api/products/${id}/`, {
         method: "DELETE",
       })
       if (res.ok) {

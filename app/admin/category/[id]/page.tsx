@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import AdminLayout from "@/app/components/admin/AdminLayout";
+import BACKEND_BASE_URL from "@/app/lib/Api";
 
 
 const CategoryForm = dynamic(() => import("../../../components/admin/CategoryForm"), {
@@ -19,7 +20,7 @@ export default function EditCategoryPage() {
     if (!id) return;
     const fetchCategory = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/product/api/categories/${id}/`);
+        const res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/${id}/`);
         if (res.ok) {
           const data = await res.json();
           setCategory(data);

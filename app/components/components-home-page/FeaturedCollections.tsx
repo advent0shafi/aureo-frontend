@@ -4,6 +4,7 @@ import Link from "next/link"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Category {
   id: number
@@ -37,7 +38,7 @@ export default function FeaturedCollections() {
     const fetchData = async () => {
       try {
         const categoriesResponse = await axios.get<{ results: Category[] }>(
-          "http://127.0.0.1:8000/product/api/categories/",
+          `${BACKEND_BASE_URL}/product/api/categories/`,
         )
         console.log("Categories API Response:", categoriesResponse.data)
         setCollections(categoriesResponse.data.results)
@@ -46,7 +47,7 @@ export default function FeaturedCollections() {
       } 
 
       try {
-        const productsResponse = await axios.get<{ results: Product[] }>("http://127.0.0.1:8000/product/api/products/")
+        const productsResponse = await axios.get<{ results: Product[] }>(`${BACKEND_BASE_URL}/product/api/products/`)
         console.log("Products API Response:", productsResponse.data)
         const trending = productsResponse.data.results.filter((product) => product.is_trending)
         setTrendingProducts(trending)
@@ -82,6 +83,7 @@ export default function FeaturedCollections() {
                     height={700}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
+               
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
                   <h3 className="text-white text-2xl font-bold mb-2">
@@ -92,6 +94,7 @@ export default function FeaturedCollections() {
                     {t("ExploreCollection")}
                   </button>
                 </div>
+              
               </div>
             </Link>
           ))}

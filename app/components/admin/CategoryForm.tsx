@@ -3,6 +3,7 @@
 import { useState, useEffect, type FormEvent, type ChangeEvent } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 interface Category {
   id: number
@@ -82,13 +83,13 @@ export default function CategoryForm({ category = null }: CategoryFormProps) {
       let res: Response
       if (category) {
         // Update existing category
-        res = await fetch(`http://localhost:8000/product/api/categories/${category.id}/`, {
+        res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/${category.id}/`, {
           method: "PATCH",
           body: data,
         })
       } else {
         // Create new category
-        res = await fetch("http://localhost:8000/product/api/categories/", {
+        res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/`, {
           method: "POST",
           body: data,
         })

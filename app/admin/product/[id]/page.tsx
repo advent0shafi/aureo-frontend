@@ -4,6 +4,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import AdminLayout from "@/app/components/admin/AdminLayout";
+import BACKEND_BASE_URL from "@/app/lib/Api";
+
+interface ImageData {
+  id: number;
+  image: string;
+  alt_text: string;
+  created_at: string;
+}
 
 interface ProductDetailsType {
   id: number
@@ -41,7 +49,7 @@ export default function EditProductPage() {
     if (!id) return;
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/product/api/products/${id}/`);
+        const res = await fetch(`${BACKEND_BASE_URL}/product/api/products/${id}/`);
         if (res.ok) {
           const data = await res.json();
           setProduct(data);

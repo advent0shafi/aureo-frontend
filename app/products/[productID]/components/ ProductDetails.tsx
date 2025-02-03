@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import Reviews from "./ Reviews"
 import axios from "axios"
+import BACKEND_BASE_URL from "@/app/lib/Api"
 
 const reviews = [
   {
@@ -56,7 +57,7 @@ export default function ProductDetails({
       }
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/cart/carts/",
+        `${BACKEND_BASE_URL}/cart/carts/`,
         {
           product_id: productId,
           quantity: quantity,
