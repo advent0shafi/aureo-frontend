@@ -5,7 +5,10 @@ import Image from "next/image"
 import { useTranslation } from "react-i18next"
 import NewArrivalsSkeleton from "./NewArrivalsSketeton"
 import BACKEND_BASE_URL from "@/app/lib/Api"
+import Link from "next/link"
+import axios from "axios"
 
+import toast, { Toaster } from "react-hot-toast"
 interface Product {
   id: number
   name_en: string
@@ -47,6 +50,34 @@ const NewArrivals: React.FC = () => {
 
     fetchProducts()
   }, [])
+  const addItemToCart = async (productId: number, quantity: number) => {
+    try {
+      let guestId = localStorage.getItem("guest_id")
+      if (!guestId) {
+        guestId = String(Math.random().toString(36).substr(2, 9))
+        localStorage.setItem("guest_id", guestId)
+      }
+
+      const response = await axios.post(
+        `${BACKEND_BASE_URL}/cart/carts/`,
+        {
+          product_id: productId,
+          quantity: quantity,
+        },
+        {
+          headers: {
+            "X-Guest-ID": guestId,
+          },
+        },
+      )
+
+      console.log("Cart updated:", response.data)
+      toast.success(t("itemAddedToCart"))
+    } catch (error) {
+      toast.error(t("failedToAddItem"))
+      console.error("Error adding item to cart:", error)
+    }
+  }
 
   if (loading) {
     return <NewArrivalsSkeleton />
@@ -62,7 +93,9 @@ const NewArrivals: React.FC = () => {
 
     return (
       <div key={product.id} className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+          <Toaster />
         <div className="relative">
+        <Link href={`/products/${product.id}`} >
           <div className="aspect-square bg-amber-50 rounded-t-xl overflow-hidden">
             <Image
               src={thumbnail || "/placeholder.svg"}
@@ -74,12 +107,14 @@ const NewArrivals: React.FC = () => {
             />
           </div>
           <span className="absolute top-4 left-4 bg-red-600 text-white text-sm px-3 py-1 rounded-full">{t("New")}</span>
+         
           <button
             className="absolute top-4 right-4 bg-white/90 p-2 rounded-full text-amber-600 hover:bg-white transition-colors duration-300"
             aria-label={t("AddToWishlist", { productName })}
           >
             <i className="fas fa-heart"></i>
           </button>
+          </Link>
         </div>
         <div className="p-4">
           <h4 className="font-bold text-gray-900">{productName}</h4>
@@ -88,7 +123,7 @@ const NewArrivals: React.FC = () => {
               {product.price} {product.currency}
             </span>
           </div>
-          <button className="w-full bg-amber-600 text-white py-2 rounded-full hover:bg-amber-700 transition-colors duration-300">
+          <button  onClick={() => addItemToCart(product.id, 1)} className="w-full bg-amber-600 text-white py-2 rounded-full hover:bg-amber-700 transition-colors duration-300">
             {t("AddToCart")}
           </button>
         </div>

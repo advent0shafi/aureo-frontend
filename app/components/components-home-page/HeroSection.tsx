@@ -1,5 +1,6 @@
 'use client'
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -32,9 +33,11 @@ export default function HeroSection() {
                 {t("heroDescrptions")}
               </p>
               <div className="flex space-x-4">
+                <Link href="/products">
                 <button className="bg-amber-600 text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors duration-300">
                   {t("ShopNow")}
                 </button>
+                </Link>
                 <button className="border-2 border-amber-600 text-amber-600 px-8 py-3 rounded-full hover:bg-amber-50 transition-colors duration-300">
                   {t("CustomDesign")}
                 </button>
@@ -49,7 +52,7 @@ export default function HeroSection() {
                 </div>
                 <div className="h-full rounded-full overflow-hidden">
                   <Image
-                    src={'/banner/newarrival.jpg'}
+                    src={'/banner/product-12-min-min_11_11zon.jpg'}
                     width={200}
                     height={200}
                     alt={t("Luxury Gold Jewelry Collection")}

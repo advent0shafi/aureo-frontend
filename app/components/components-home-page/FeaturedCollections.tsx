@@ -90,9 +90,11 @@ export default function FeaturedCollections() {
                     {isRTL ? collection.name_ar : collection.name_en}
                   </h3>
                   <p className="text-amber-200 mb-4">{isRTL ? collection.description_ar : collection.description_en}</p>
+                  <Link href={`/products?${collection.name_en}${collection.name_ar}`} passHref>
                   <button className="bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300 w-fit">
                     {t("ExploreCollection")}
                   </button>
+                  </Link>
                 </div>
               
               </div>
@@ -105,7 +107,7 @@ export default function FeaturedCollections() {
           <h3 className="text-2xl font-bold text-gray-900 mb-8">{t("TrendingNow")}</h3>
           <div className="flex overflow-x-auto gap-6 pb-6 no-scrollbar">
             {trendingProducts.map((product) => (
-              <Link href={`/product/${product.id}`} key={product.id} passHref>
+              <Link href={`/products/${product.id}`} key={product.id} passHref>
                 <div className="min-w-[280px] bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
                   <div className="aspect-square bg-amber-50 rounded-t-xl overflow-hidden">
                     <Image
@@ -122,7 +124,7 @@ export default function FeaturedCollections() {
                       {t("Price")}: {product.price} {product.currency}
                     </p>
                     <button className="w-full mt-4 bg-amber-600 text-white py-2 rounded-full hover:bg-amber-700 transition-colors duration-300">
-                      {t("AddToCart")}
+                      {t("ViewMore")}
                     </button>
                   </div>
                 </div>

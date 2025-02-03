@@ -176,7 +176,7 @@ export default function ProductList() {
           </div>
 
           {/* Filters */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 overflow-x-scroll">
             {/* Category Filter */}
             <div className="relative">
               <select

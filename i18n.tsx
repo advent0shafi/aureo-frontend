@@ -131,7 +131,7 @@ i18n
           login: "Login",
           signUp: "Sign Up",
           cart: "Cart",
-
+          ViewMore: "View Product",
           // prdduct listing
           searchPlaceholder: "Search by name, category, or material...",
           category: "Category",
@@ -310,6 +310,7 @@ i18n
           ExclusivePieces: "قطع حصرية لك",
           ShopCollection: "تسوق المجموعة",
 
+          ViewMore:"عرض المنتج",
           personalizedLuxury: "الفخامة الشخصية",
           customDesignService: "خدمة التصميم المخصص",
           customDesignDescription:

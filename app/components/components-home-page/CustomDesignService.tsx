@@ -2,6 +2,7 @@
 import Image from "next/image"
 import { FaPencilAlt, FaGem, FaMagic } from "react-icons/fa"
 import { useTranslation } from "react-i18next"
+import Link from "next/link"
 
 export default function CustomDesignService() {
   const { t, i18n } = useTranslation()
@@ -58,7 +59,7 @@ export default function CustomDesignService() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="aspect-square bg-amber-50 rounded-xl overflow-hidden">
               <Image
-                src="/banner/ee.jpg"
+                src="/banner/custom-1.jpg"
                 alt={t("customRingDesign")}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 width={300}
@@ -67,7 +68,7 @@ export default function CustomDesignService() {
             </div>
             <div className="aspect-square bg-amber-50 rounded-xl overflow-hidden">
               <Image
-                src="/banner/ee.jpg"
+                src="/banner/custom-2.jpg"
                 alt={t("customNecklaceDesign")}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 width={300}
@@ -76,7 +77,7 @@ export default function CustomDesignService() {
             </div>
             <div className="aspect-square bg-amber-50 rounded-xl overflow-hidden">
               <Image
-                src="/banner/ee.jpg"
+                src="/banner/custom-3.jpg"
                 alt={t("customBraceletDesign")}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 width={300}
@@ -85,7 +86,7 @@ export default function CustomDesignService() {
             </div>
             <div className="aspect-square bg-amber-50 rounded-xl overflow-hidden">
               <Image
-                src="/banner/ee.jpg"
+                src="/banner/custom-4.jpg"
                 alt={t("customJewelrySet")}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 width={300}
@@ -100,12 +101,16 @@ export default function CustomDesignService() {
           <h3 className="text-2xl lg:text-3xl font-bold mb-4">{t("readyToCreate")}</h3>
           <p className="mb-8 text-amber-100">{t("bookConsultationDesc")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link  href="/contact">
             <button className="bg-white text-amber-600 px-8 py-3 rounded-full hover:bg-amber-50 transition-colors duration-300">
               {t("bookConsultation")}
             </button>
+            </Link>
+            <Link  href="/contact">
             <button className="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors duration-300">
               {t("learnMore")}
             </button>
+            </Link>
           </div>
         </div>
       </div>

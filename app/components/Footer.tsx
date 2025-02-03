@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import {
   FaFacebookF,
@@ -27,9 +28,9 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Company Info */}
           <div>
-            <h3 className="text-2xl font-heading font-bold text-amber-600 mb-6">
-              {t("companyName")}
-            </h3>
+          <Link href="/" className="flex-shrink-0 flex items-center">
+            <Image src="/logo_001.png" width={50} alt="logo" height={50} className="object-contain" />
+          </Link>
             <p className="text-gray-400 mb-6">{t("companyDescription")}</p>
             <div className="flex space-x-4">
               <a

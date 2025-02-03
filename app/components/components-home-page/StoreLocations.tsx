@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link"
 import { useTranslation } from "react-i18next"
 import { FaMapMarkerAlt, FaClock, FaPhone, FaCoffee, FaParking, FaGem, FaTools } from "react-icons/fa"
 
@@ -41,7 +42,7 @@ export default function StoreLocation() {
             >
               <div className="aspect-video bg-amber-50 rounded-t-2xl overflow-hidden">
                 <Image
-                  src={"/banner/newarrival.jpg"}
+                  src={"/map.png"}
                   alt={t(store.name)}
                   className="w-full h-full object-cover"
                   width={800}
@@ -92,9 +93,11 @@ export default function StoreLocation() {
 
         {/* Book Appointment CTA */}
         <div className="mt-16 text-center">
+          <Link href="/contact">
           <button className="bg-amber-600 text-white px-8 py-3 rounded-full hover:bg-amber-700 transition-colors duration-300">
             {t("bookAppointment")}
           </button>
+          </Link>
         </div>
       </div>
     </section>
