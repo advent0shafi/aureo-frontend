@@ -251,6 +251,45 @@ i18n
           password: "Password",
 
           continueAsGuest: "Continue as Guest",
+
+          craftingTimeless: "Crafting Timeless",
+          elegance: "Elegance",
+          aboutDescription:
+            "With over two decades of expertise in fine jewelry, we blend traditional craftsmanship with contemporary design to create pieces that tell your unique story.",
+          heritage: "Heritage",
+          heritageDescription:
+            "Rooted in traditional craftsmanship passed down through generations.",
+          quality: "Quality",
+          qualityDescription:
+            "Only the finest materials and most skilled artisans create our pieces.",
+          innovation: "Innovation",
+          innovationDescription:
+            "Blending time-honored techniques with modern design sensibilities.",
+          ourStory: "Our Story",
+          storyDescription:
+            "Founded with a passion for exceptional craftsmanship and design, our journey began in the heart of the jewelry district. Each piece we create is a testament to our commitment to quality and artistic excellence.",
+          yearsOfExcellence: "Years of Excellence",
+          happyCustomers: "Happy Customers",
+          authenticMaterials: "Authentic Materials",
+          experienceOurCraftsmanship: "Experience Our Craftsmanship",
+          viewCollection: "View Collection",
+
+          getInTouch: "Get in Touch",
+          contactDescription:
+            "We're here to help you find the perfect piece or create something uniquely yours.",
+          visitUs: "Visit Us",
+          callUs: "Call Us",
+          emailUs: "Email Us",
+          workingHours: "Sunday - Thursday: 10AM - 8PM",
+          emailAddresses: "info@yourjewelry.com\nsupport@yourjewelry.com",
+          sendUsMessage: "Send Us a Message",
+          name: "Name",
+      
+          subject: "Subject",
+          message: "Message",
+          sendMessage: "Send Message",
+          sending: "Sending...",
+         
         },
       },
       ar: {
@@ -481,16 +520,51 @@ i18n
           orderDetails: "تفاصيل الطلب",
           orderNumber: "رقم الطلب",
           estimatedDelivery: "التسليم المتوقع",
-        
+
           continueToPayment: "المتابعة إلى الدفع",
           secureCheckout: "دفع آمن",
           loginRequired: "تسجيل الدخول مطلوب",
           loginMessage: "يرجى تسجيل الدخول للمتابعة مع عملية الشراء",
-        
+
           password: "كلمة المرور",
-        
+
           continueAsGuest: "المتابعة كضيف",
-          
+
+          craftingTimeless: "صياغة الأناقة",
+          elegance: "الخالدة",
+          aboutDescription:
+            "مع أكثر من عقدين من الخبرة في المجوهرات الراقية، نمزج بين الحرفية التقليدية والتصميم المعاصر لإنشاء قطع تروي قصتك الفريدة.",
+          heritage: "التراث",
+          heritageDescription:
+            "متجذرة في الحرفية التقليدية المتوارثة عبر الأجيال.",
+          quality: "الجودة",
+          qualityDescription:
+            "فقط أفضل المواد وأكثر الحرفيين مهارة يصنعون قطعنا.",
+          innovation: "الابتكار",
+          innovationDescription:
+            "مزج التقنيات العريقة مع الحساسيات التصميمية الحديثة.",
+          ourStory: "قصتنا",
+          storyDescription:
+            "تأسست بشغف للحرفية والتصميم الاستثنائي، بدأت رحلتنا في قلب حي المجوهرات. كل قطعة نصنعها هي شهادة على التزامنا بالجودة والتميز الفني.",
+          yearsOfExcellence: "سنوات من التميز",
+          happyCustomers: "عميل سعيد",
+          authenticMaterials: "مواد أصلية",
+          experienceOurCraftsmanship: "اختبر حرفيتنا",
+          viewCollection: "عرض المجموعة",
+          getInTouch: "تواصل معنا",
+          contactDescription: "نحن هنا لمساعدتك في العثور على القطعة المثالية أو إنشاء شيء فريد خاص بك.",
+          visitUs: "زورونا",
+          callUs: "اتصل بنا",
+          emailUs: "راسلنا",
+        
+          workingHours: "الأحد - الخميس: 10 صباحًا - 8 مساءً",
+          emailAddresses: "info@yourjewelry.com\nsupport@yourjewelry.com",
+          sendUsMessage: "أرسل لنا رسالة",
+          name: "الاسم",
+          subject: "الموضوع",
+          message: "الرسالة",
+          sendMessage: "إرسال الرسالة",
+          sending: "جاري الإرسال...",
         },
       },
     },
