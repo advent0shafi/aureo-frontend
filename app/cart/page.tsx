@@ -7,6 +7,7 @@ import { FaTrash, FaMinus, FaPlus, FaArrowLeft, FaCcVisa, FaCcMastercard, FaCcAm
 import Link from "next/link"
 import CartSkeleton from "@/app/components/skeletons/CartSkeleton"
 import BACKEND_BASE_URL from "../lib/Api"
+import { useTranslation } from "react-i18next"
 
 interface Product {
   id: number
@@ -39,7 +40,8 @@ const API_BASE_URL = BACKEND_BASE_URL
 export default function Carts() {
   const [cart, setCart] = useState<Cart | null>(null)
   const [loading, setLoading] = useState(true)
-
+ const { t, i18n } = useTranslation()
+  const isRTL = i18n.language === "ar"
   const getOrCreateGuestId = useCallback(() => {
     let guestId = localStorage.getItem("guest_id")
     if (!guestId) {
@@ -140,8 +142,8 @@ export default function Carts() {
       <Toaster />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Shopping Cart</h2>
-          <p className="text-gray-600 mt-2">Review your items before checkout</p>
+          <h2 className="text-3xl font-bold text-gray-900">{t("shoppingCart")}</h2>
+          <p className="text-gray-600 mt-2">{t("reviewItems")}</p>
         </div>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-8">
@@ -165,7 +167,7 @@ export default function Carts() {
                     <div className="flex-grow">
                       <div className="flex justify-between">
                         <div>
-                          <h3 className="font-bold text-gray-900">{item.product.name_en}</h3>
+                          <h3 className="font-bold text-gray-900"> {isRTL ? item.product.name_ar : item.product.name_en}</h3>
                           <p className="text-sm text-gray-600">{item.product.material}</p>
                         </div>
                         <button
@@ -206,41 +208,41 @@ export default function Carts() {
             <div className="mt-6">
               <Link href="/products" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700">
                 <FaArrowLeft />
-                <span>Continue Shopping</span>
+                <span>{t("continueShopping")}</span>
               </Link>
             </div>
           </div>
 
           <div className="lg:col-span-4 mt-8 lg:mt-0">
             <div className="bg-white rounded-2xl shadow-sm p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Order Summary</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{t("orderSummary")}</h3>
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-600">{t("subtotal")}</span>
                   <span className="font-medium">{cart.subtotal} QAR</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
+                  <span className="text-gray-600">{t("shipping")}</span>
                   <span className="font-medium">{cart.shipping_cost} QAR</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">VAT (5%)</span>
+                  <span className="text-gray-600">{t("vat")}</span>
                   <span className="font-medium">{cart.vat} QAR</span>
                 </div>
                 <div className="border-t pt-4">
                   <div className="flex justify-between">
-                    <span className="font-bold">Total</span>
+                    <span className="font-bold">{t("total")}</span>
                     <span className="font-bold text-amber-600">{cart.total} QAR</span>
                   </div>
                 </div>
               </div>
               <Link href="/checkout" className="block w-full">
                 <button className="w-full bg-amber-600 text-white py-3 rounded-full mt-6 hover:bg-amber-700 transition-colors duration-300">
-                  Proceed to Checkout
+                  {t("proceedToCheckout")}
                 </button>
               </Link>
               <div className="mt-6 text-center text-sm text-gray-600">
-                <p className="mb-2">We accept</p>
+                <p className="mb-2">{t("weAccept")}</p>
                 <div className="flex justify-center gap-2 text-gray-400 text-xl">
                   <FaCcVisa />
                   <FaCcMastercard />

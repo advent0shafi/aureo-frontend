@@ -3,10 +3,15 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Lock } from "lucide-react"
+import { useTranslation } from "react-i18next"
+import type React from "react" // Added import for React
 
 type Step = "information" | "payment" | "confirmation"
 
 export default function CheckoutPage() {
+  const { t } = useTranslation()
+  
+
   const [step, setStep] = useState<Step>("information")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showLoginModal, setShowLoginModal] = useState(false)
@@ -38,26 +43,26 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className={`min-h-screen bg-gray-50 py-8 `}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-4">
             <StepIndicator
               number={1}
-              title="Information"
+              title={t("information")}
               isActive={step === "information"}
               isCompleted={step === "payment" || step === "confirmation"}
             />
             <div className="h-[2px] w-16 bg-gray-200" />
             <StepIndicator
               number={2}
-              title="Payment"
+              title={t("payment")}
               isActive={step === "payment"}
               isCompleted={step === "confirmation"}
             />
             <div className="h-[2px] w-16 bg-gray-200" />
-            <StepIndicator number={3} title="Confirmation" isActive={step === "confirmation"} />
+            <StepIndicator number={3} title={t("confirmation")} isActive={step === "confirmation"} />
           </div>
         </div>
 
@@ -66,10 +71,10 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2">
             {step === "information" && (
               <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-2xl font-bold mb-6">Shipping Information</h2>
+                <h2 className="text-2xl font-bold mb-6">{t("shippingInformation")}</h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("firstName")}</label>
                     <input
                       type="text"
                       name="firstName"
@@ -79,7 +84,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("lastName")}</label>
                     <input
                       type="text"
                       name="lastName"
@@ -89,7 +94,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("emailAddress")}</label>
                     <input
                       type="email"
                       name="email"
@@ -99,7 +104,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("phoneNumber")}</label>
                     <input
                       type="tel"
                       name="phone"
@@ -109,7 +114,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("streetAddress")}</label>
                     <input
                       type="text"
                       name="streetAddress"
@@ -119,7 +124,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("city")}</label>
                     <input
                       type="text"
                       name="city"
@@ -129,7 +134,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Area</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("area")}</label>
                     <input
                       type="text"
                       name="area"
@@ -139,7 +144,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Building/Villa No.</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("buildingNo")}</label>
                     <input
                       type="text"
                       name="buildingNo"
@@ -149,9 +154,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Delivery Instructions (Optional)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("deliveryInstructions")}</label>
                     <textarea
                       name="deliveryInstructions"
                       value={formData.deliveryInstructions}
@@ -166,10 +169,10 @@ export default function CheckoutPage() {
 
             {step === "payment" && (
               <div className="bg-white p-6 rounded-lg shadow">
-                <h2 className="text-2xl font-bold mb-6">Payment Details</h2>
+                <h2 className="text-2xl font-bold mb-6">{t("paymentDetails")}</h2>
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{t("cardNumber")}</label>
                     <input
                       type="text"
                       placeholder="1234 5678 9012 3456"
@@ -178,7 +181,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("expiryDate")}</label>
                       <input
                         type="text"
                         placeholder="MM/YY"
@@ -186,7 +189,7 @@ export default function CheckoutPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">{t("cvv")}</label>
                       <input
                         type="text"
                         placeholder="123"
@@ -198,7 +201,7 @@ export default function CheckoutPage() {
                     onClick={() => setStep("confirmation")}
                     className="w-full bg-orange-500 text-white py-3 rounded-md hover:bg-orange-600 transition-colors"
                   >
-                    Complete Payment
+                    {t("completePayment")}
                   </button>
                 </div>
               </div>
@@ -213,12 +216,12 @@ export default function CheckoutPage() {
                     </svg>
                   </div>
                 </div>
-                <h2 className="text-2xl font-bold mb-2">Order Confirmed!</h2>
-                <p className="text-gray-600 mb-6">Thank you for your purchase. Your order has been confirmed.</p>
+                <h2 className="text-2xl font-bold mb-2">{t("orderConfirmed")}</h2>
+                <p className="text-gray-600 mb-6">{t("thankYouMessage")}</p>
                 <div className="text-left bg-gray-50 p-4 rounded-md">
-                  <h3 className="font-semibold mb-2">Order Details</h3>
-                  <p>Order Number: #123456</p>
-                  <p>Estimated Delivery: 3-5 business days</p>
+                  <h3 className="font-semibold mb-2">{t("orderDetails")}</h3>
+                  <p>{t("orderNumber")}: #123456</p>
+                  <p>{t("estimatedDelivery")}: 3-5 business days</p>
                 </div>
               </div>
             )}
@@ -227,15 +230,10 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="text-lg font-bold mb-4">Order Summary</h3>
+              <h3 className="text-lg font-bold mb-4">{t("orderSummary")}</h3>
               <div className="flex items-center space-x-4 mb-4">
                 <div className="w-20 h-20 relative">
-                  <Image
-                    src="/banner/ee.jpg"
-                    alt="Diamond Gold Ring"
-                    fill
-                    className="object-cover rounded"
-                  />
+                  <Image src="/banner/ee.jpg" alt="Diamond Gold Ring" fill className="object-cover rounded" />
                 </div>
                 <div>
                   <h4 className="font-medium">Diamond Gold Ring</h4>
@@ -245,19 +243,19 @@ export default function CheckoutPage() {
               </div>
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
+                  <span className="text-gray-600">{t("subtotal")}</span>
                   <span>4,500 QAR</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
-                  <span className="text-green-500">Free</span>
+                  <span className="text-gray-600">{t("shipping")}</span>
+                  <span className="text-green-500">{t("free")}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">VAT (5%)</span>
+                  <span className="text-gray-600">{t("vat")}</span>
                   <span>225 QAR</span>
                 </div>
                 <div className="flex justify-between font-bold pt-2 border-t">
-                  <span>Total</span>
+                  <span>{t("total")}</span>
                   <span className="text-orange-500">4,725 QAR</span>
                 </div>
               </div>
@@ -266,12 +264,12 @@ export default function CheckoutPage() {
                   onClick={handleContinue}
                   className="w-full bg-orange-500 text-white py-3 rounded-md mt-6 hover:bg-orange-600 transition-colors"
                 >
-                  Continue to Payment
+                  {t("continueToPayment")}
                 </button>
               )}
               <div className="flex items-center justify-center mt-4 text-sm text-gray-500">
                 <Lock className="w-4 h-4 mr-1" />
-                Secure Checkout
+                {t("secureCheckout")}
               </div>
             </div>
           </div>
@@ -282,13 +280,17 @@ export default function CheckoutPage() {
       {showLoginModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4">Login Required</h2>
-            <p className="text-gray-600 mb-6">Please login to continue with your purchase</p>
+            <h2 className="text-2xl font-bold mb-4">{t("loginRequired")}</h2>
+            <p className="text-gray-600 mb-6">{t("loginMessage")}</p>
             <div className="space-y-4">
-              <input type="email" placeholder="Email" className="w-full px-4 py-2 border border-gray-300 rounded-md" />
+              <input
+                type="email"
+                placeholder={t("email")}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
+              />
               <input
                 type="password"
-                placeholder="Password"
+                placeholder={t("password")}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md"
               />
               <button
@@ -299,13 +301,13 @@ export default function CheckoutPage() {
                 }}
                 className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition-colors"
               >
-                Login
+                {t("login")}
               </button>
               <button
                 onClick={() => setShowLoginModal(false)}
                 className="w-full bg-gray-100 text-gray-700 py-2 rounded-md hover:bg-gray-200 transition-colors"
               >
-                Continue as Guest
+                {t("continueAsGuest")}
               </button>
             </div>
           </div>
