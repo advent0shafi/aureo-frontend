@@ -1,44 +1,59 @@
-"use client"
-import { useEffect, useState, useMemo } from "react"
-import Image from "next/image"
-import Link from "next/link"
-import axios from "axios"
-import toast, { Toaster } from "react-hot-toast"
-import { useTranslation } from "react-i18next"
+"use client";
+import { useEffect, useState, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
-import { FaSearch, FaChevronDown, FaHeart, FaChevronLeft, FaChevronRight } from "react-icons/fa"
-import ProductSkeleton from "./skeletons/ProductSkeletons"
-import BACKEND_BASE_URL from "../lib/Api"
-
+import {
+  FaSearch,
+  FaChevronDown,
+  FaHeart,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
+import ProductSkeleton from "./skeletons/ProductSkeletons";
+import BACKEND_BASE_URL from "../lib/Api";
+interface Category {
+  id: number;
+  name_en: string;
+  name_ar: string;
+  description_en: string;
+  description_ar: string;
+  image: string;
+  sku: string;
+}
 interface Product {
-  id: number
-  name_en: string
-  name_ar: string
-  thumbnail_image: string
-  price: number
-  currency: string
-  material: string
-  category: string
+  id: number;
+  name_en: string;
+  name_ar: string;
+  thumbnail_image: string;
+  price: number;
+  currency: string;
+  material: string;
+  category: number;
 }
 
 interface PriceRange {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 export default function ProductList() {
-  const { t, i18n } = useTranslation()
-  const isRTL = i18n.language === "ar"
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === "ar";
+  const [categories, setCategories] = useState<Category[]>([]);
 
-  const [products, setProducts] = useState<Product[]>([])
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<boolean>(false)
-  const [page, setPage] = useState<number>(1)
-  const [category, setCategory] = useState<string>("")
-  const [priceRange, setPriceRange] = useState<string>("")
-  const [material, setMaterial] = useState<string>("")
-  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [category, setCategory] = useState<number | "">("");
+  const [priceRange, setPriceRange] = useState<string>("");
+  const [material, setMaterial] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const priceRanges = useMemo<PriceRange[]>(
     () => [
@@ -47,75 +62,99 @@ export default function ProductList() {
       { label: t("5000to10000"), value: "$5,000 - $10,000" },
       { label: t("above10000"), value: "Above $10,000" },
     ],
-    [t],
-  )
+    [t]
+  );
 
-  const materials = useMemo<string[]>(() => ["Gold", "Diamond", "Platinum", "Silver"], [])
-
+  const materials = useMemo<string[]>(
+    () => ["Gold", "Diamond", "Platinum", "Silver"],
+    []
+  );
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch(`${BACKEND_BASE_URL}/product/api/categories/`);
+      const data = await res.json();
+      setCategories(data.results || data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true)
-      setError(false)
+      setLoading(true);
+      setError(false);
       try {
-        const response = await fetch(`${BACKEND_BASE_URL}/product/api/products/`)
-        const data = await response.json()
-        setProducts(data.results)
-        setFilteredProducts(data.results)
+        const response = await fetch(
+          `${BACKEND_BASE_URL}/product/api/products/`
+        );
+        const data = await response.json();
+        setProducts(data.results);
+        console.log("Products API Response:", data.results);
+        setFilteredProducts(data.results);
       } catch (err) {
-        console.error("Error fetching products:", err)
-        setError(true)
+        console.error("Error fetching products:", err);
+        setError(true);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchProducts()
-  }, [])
+    };
+    fetchProducts();
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
-    let filtered = [...products]
+    let filtered = [...products];
 
     if (category) {
-      filtered = filtered.filter((product) => product.category === category)
+      filtered = filtered.filter((product) => product.category === category);
     }
 
     if (priceRange) {
       if (priceRange === "Under $1,000") {
-        filtered = filtered.filter((product) => product.price < 1000)
+        filtered = filtered.filter((product) => product.price < 1000);
       } else if (priceRange === "$1,000 - $5,000") {
-        filtered = filtered.filter((product) => product.price >= 1000 && product.price <= 5000)
+        filtered = filtered.filter(
+          (product) => product.price >= 1000 && product.price <= 5000
+        );
       } else if (priceRange === "$5,000 - $10,000") {
-        filtered = filtered.filter((product) => product.price >= 5000 && product.price <= 10000)
+        filtered = filtered.filter(
+          (product) => product.price >= 5000 && product.price <= 10000
+        );
       } else if (priceRange === "Above $10,000") {
-        filtered = filtered.filter((product) => product.price > 10000)
+        filtered = filtered.filter((product) => product.price > 10000);
       }
     }
 
     if (material) {
-      filtered = filtered.filter((product) => product.material.toLowerCase() === material.toLowerCase())
+      filtered = filtered.filter(
+        (product) => product.material.toLowerCase() === material.toLowerCase()
+      );
     }
 
     if (searchQuery) {
       filtered = filtered.filter(
         (product) =>
           product.name_en.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.name_ar.toLowerCase().includes(searchQuery.toLowerCase()),
-      )
+          product.name_ar.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
 
-    setFilteredProducts(filtered)
-  }, [category, priceRange, material, searchQuery, products])
+    setFilteredProducts(filtered);
+  }, [category, priceRange, material, searchQuery, products]);
 
-  const productsPerPage = 12
-  const startIndex = (page - 1) * productsPerPage
-  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage)
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
+  const productsPerPage = 12;
+  const startIndex = (page - 1) * productsPerPage;
+  const currentProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + productsPerPage
+  );
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   const addItemToCart = async (productId: number, quantity: number) => {
     try {
-      let guestId = localStorage.getItem("guest_id")
+      let guestId = localStorage.getItem("guest_id");
       if (!guestId) {
-        guestId = String(Math.random().toString(36).substr(2, 9))
-        localStorage.setItem("guest_id", guestId)
+        guestId = String(Math.random().toString(36).substr(2, 9));
+        localStorage.setItem("guest_id", guestId);
       }
 
       const response = await axios.post(
@@ -128,23 +167,23 @@ export default function ProductList() {
           headers: {
             "X-Guest-ID": guestId,
           },
-        },
-      )
+        }
+      );
 
-      console.log("Cart updated:", response.data)
-      toast.success(t("itemAddedToCart"))
+      console.log("Cart updated:", response.data);
+      toast.success(t("itemAddedToCart"));
     } catch (error) {
-      toast.error(t("failedToAddItem"))
-      console.error("Error adding item to cart:", error)
+      toast.error(t("failedToAddItem"));
+      console.error("Error adding item to cart:", error);
     }
-  }
+  };
 
   if (loading) {
     return (
       <div>
         <ProductSkeleton />
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -152,13 +191,16 @@ export default function ProductList() {
       <div>
         <ProductSkeleton />
       </div>
-    )
+    );
   }
 
   return (
-    <section id="product_listing" className={`pb-16 pt-30 bg-white mt-5 ${isRTL ? "rtl" : "ltr"}`}>
+    <section
+      id="product_listing"
+      className={`pb-16 pt-30 bg-white mt-5 ${isRTL ? "rtl" : "ltr"}`}
+    >
       <Toaster />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Filters and Search */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 ">
           {/* Search Bar */}
@@ -176,25 +218,30 @@ export default function ProductList() {
           </div>
 
           {/* Filters */}
-          <div className="flex items-center space-x-4 overflow-x-scroll">
+          <div className="flex items-center space-x-4 overflow-x-auto md:justify-end w-full">
             {/* Category Filter */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <select
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-40 pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={(e) =>
+                  setCategory(e.target.value ? Number(e.target.value) : "")
+                }
               >
                 <option value="">{t("category")}</option>
-                <option value="3">{t("jewelry")}</option>
-                <option value="4">{t("watches")}</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {isRTL ? cat.name_ar : cat.name_en}
+                  </option>
+                ))}
               </select>
-              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
 
             {/* Price Filter */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <select
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-40 pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
               >
@@ -205,13 +252,13 @@ export default function ProductList() {
                   </option>
                 ))}
               </select>
-              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
 
             {/* Material Filter */}
-            <div className="relative">
+            <div className="relative flex-shrink-0">
               <select
-                className="pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                className="w-40 pl-4 pr-10 py-2 border border-gray-300 rounded-full appearance-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
                 value={material}
                 onChange={(e) => setMaterial(e.target.value)}
               >
@@ -222,7 +269,7 @@ export default function ProductList() {
                   </option>
                 ))}
               </select>
-              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <FaChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -230,8 +277,8 @@ export default function ProductList() {
         {/* Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentProducts.map((product) => {
-            const productName = isRTL ? product.name_ar : product.name_en
-            const thumbnail = product.thumbnail_image || "/default-image.jpg"
+            const productName = isRTL ? product.name_ar : product.name_en;
+            const thumbnail = product.thumbnail_image || "/default-image.jpg";
 
             return (
               <div className="group" key={product.id}>
@@ -259,17 +306,17 @@ export default function ProductList() {
                     </button>
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 ">
                   <h3 className="font-semibold">{productName}</h3>
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">{product.material}</p>
-                    <p className="font-bold text-gray-900">
+                    <p className="md:font-bold text-sm font-semibold  md:text-base text-gray-900">
                       {product.price} {product.currency}
                     </p>
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
 
@@ -303,6 +350,5 @@ export default function ProductList() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -147,7 +147,7 @@ const NewArrivals: React.FC = () => {
             <Image
               src={"/banner/main-banner-0.jpg"}
               alt={t("RoyalCollection")}
-              className="w-full h-full object-cover"
+              className="w-full min-h-[400px] md:min-h-full md:h-full object-cover"
               width={1200}
               height={400}
               loading="lazy"

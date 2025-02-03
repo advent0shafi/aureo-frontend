@@ -73,7 +73,10 @@ export default function FeaturedCollections() {
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {collections.map((collection) => (
-            <Link href={`/category/${collection.id}`} key={collection.id} passHref>
+           <Link
+           key={collection.id}
+           href={`/category/${collection.id}?categoryName=${encodeURIComponent(isRTL ? collection.name_ar : collection.name_en)}`}
+         >
               <div className="group relative overflow-hidden rounded-2xl cursor-pointer">
                 <div className="aspect-[3/4] bg-amber-100">
                   <Image
@@ -90,7 +93,9 @@ export default function FeaturedCollections() {
                     {isRTL ? collection.name_ar : collection.name_en}
                   </h3>
                   <p className="text-amber-200 mb-4">{isRTL ? collection.description_ar : collection.description_en}</p>
-                  <Link href={`/products?${collection.name_en}${collection.name_ar}`} passHref>
+                  <Link
+           href={`/category/${collection.id}?categoryName=${encodeURIComponent(isRTL ? collection.name_ar : collection.name_en)}`}
+         >
                   <button className="bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-colors duration-300 w-fit">
                     {t("ExploreCollection")}
                   </button>
